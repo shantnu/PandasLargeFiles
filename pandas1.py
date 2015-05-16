@@ -1,40 +1,44 @@
 import pandas as pd
-import pdb
 
-data = pd.read_csv("Accidents7904.csv")
-print len(data)
 
+# Read the file
+data = pd.read_csv("Accidents7904.csv", low_memory=False)
+# Output the number of rows
+print("Total rows: {0}".format(len(data)))
 # See what headers are available
-list(data)
+# print(list(data))
 
-# Accidents which killed more than 10 people
-data1 = data[data.Number_of_Casualties > 10]
-print data1.head()
-print len(data1)
+print("\n Accidents")
+print("-----------")
 
-# Accidents which killed at leat 10 people and had 20 cars
-data2 = data[(data.Number_of_Casualties > 10) & (data.Number_of_Vehicles > 20)]
-print len(data2)
+# Accidents which killed > 10 people
+ten_deaths = data[data.Number_of_Casualties > 10]
+print("> 10 people died: {0}".format(
+    len(ten_deaths)))
 
-# Same as above, but when it was raining
-data3 = data[(data.Number_of_Casualties > 10) & (data.Number_of_Vehicles > 20) & (data.Weather_Conditions  == 2)]
+# Accidents which killed > 10 people, > 20 cars
+ten_deaths_twenty_cars = data[
+    (data.Number_of_Casualties > 10) & (data.Number_of_Vehicles > 20)]
+print("> 10 people died involving > 20 cars: {0}".format(
+    len(ten_deaths_twenty_cars)))
 
-print len(data3)
-#Out[29]: 6
+# Accidents which killed > 10 people, > 20 cars, in the rain
+ten_deaths_twenty_cars_rain = data[
+    (data.Number_of_Casualties > 10) & (data.Number_of_Vehicles > 20) &
+    (data.Weather_Conditions == 2)]
+print("> 10 people died involving > 20 cars in the rain: {0}".format(
+    len(ten_deaths_twenty_cars_rain)))
 
-# Incidents when more than 4 people died due to snow in London
-data6 = data[(data.Weather_Conditions == 3) & (data.Number_of_Casualties > 5) & (data.Police_Force == 1)]
-print len(data6)
-#data6.head()
+# All the accidents in London from 1979-2004
+london_accidents = data[data['Police_Force'] == 1]
+london_accidents_date_casualties = london_accidents[[
+    'Date', 'Number_of_Casualties']]
+print("\nTotal accidents in London from 1979-2004: {0}\n".format(
+    len(london_accidents_date_casualties)))
+print(london_accidents_date_casualties.head(10))
 
-# Only police force in London
-data_london = data[data['Police_Force'] == 1]
-print data_london[:5]
-
-# Extract only the fields we need
-data_london_new2 = data_london[['Date', 'Number_of_Casualties']]
-print data_london_new2.head()
-
-writer = pd.ExcelWriter('Accidents_London.xlsx')
-data_london_new2.to_excel(writer,'Sheet1')
+# Save to Excel
+writer = pd.ExcelWriter(
+    'Accidents_London.xlsx', engine='xlsxwriter')
+london_accidents_date_casualties.to_excel(writer, 'Sheet1')
 writer.save()
