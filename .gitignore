@@ -56,5 +56,6 @@ docs/_build/
 # PyBuilder
 target/
 
-Accidents7904.csv
-Accidents_London.xlsx
+*.csv
+*.xlsx
+*.xls
