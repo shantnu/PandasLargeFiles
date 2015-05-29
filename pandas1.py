@@ -12,22 +12,22 @@ print("\n Accidents")
 print("-----------")
 
 # Accidents which happened on a Sunday
-ten_deaths = data[data.Day_of_Week == 1]
+accidents_sunday = data[data.Day_of_Week == 1]
 print("Accidents which happened on a Sunday: {0}".format(
-    len(ten_deaths)))
+    len(accidents_sunday)))
 
 # Accidents which happened on a Sunday, > 20 cars
-ten_deaths_twenty_cars = data[
+accidents_sunday_twenty_cars = data[
     (data.Day_of_Week == 1) & (data.Number_of_Vehicles > 20)]
 print("Accidents which happened on a Sunday involving > 20 cars: {0}".format(
-    len(ten_deaths_twenty_cars)))
+    len(accidents_sunday_twenty_cars)))
 
 # Accidents which happened on a Sunday, > 20 cars, in the rain
-ten_deaths_twenty_cars_rain = data[
+accidents_sunday_twenty_cars_rain = data[
     (data.Day_of_Week == 1) & (data.Number_of_Vehicles > 20) &
     (data.Weather_Conditions == 2)]
 print("Accidents which happened on a Sunday involving > 20 cars in the rain: {0}".format(
-    len(ten_deaths_twenty_cars_rain)))
+    len(accidents_sunday_twenty_cars_rain)))
 
 # All the accidents in London from 1979-2004
 london_data = data[data['Police_Force'] == 1]
