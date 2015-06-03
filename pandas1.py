@@ -38,7 +38,7 @@ pd.options.mode.chained_assignment = None
 
 # Convert date to Pandas date/time
 london_data['Date'] = pd.to_datetime(london_data['Date'])
-print(london_data['Date'][:5])
+#print(london_data['Date'][:5])
 
 
 # Extract the data for only the year 2000, Londay & Sundays
